@@ -35,6 +35,7 @@ public class BackupService {
         this.objectMapper = objectMapper;
     }
 
+    // coleta todos os registros do banco e coloca num objeto Map e transforma esse objeto em um json
     private void gerarBackupArquivo(String caminho) throws Exception {
         Map<String, Object> dados = new HashMap<>();
 
@@ -44,7 +45,7 @@ public class BackupService {
         objectMapper.writeValue(new File(caminho), dados);
     }    
 
-    // backup manual
+    // gatilho manual que define um nome padrao e chama o metodo de geracao de arquivo
     public String realizarBackup() {
         try {
             String caminho = DIRETORIO_BACKUP + "backup_manual.json";
@@ -55,9 +56,10 @@ public class BackupService {
         }
     }
 
-    // restore
+    // lê um arquivo json, apaga tudo o que existe no banco de dados atual e reinsere os dados do arquivo
     public String restaurarBackup(String nomeArquivo) {
         try {
+            // validacao de seguranca do nome do arquivo
             if (!nomeArquivo.startsWith("backup_") || !nomeArquivo.endsWith(".json")) {
                 throw new RuntimeException("Arquivo inválido");
             }
@@ -68,16 +70,19 @@ public class BackupService {
                 throw new RuntimeException("Arquivo de backup não encontrado: " + nomeArquivo);
             }
 
+            // le o json e transforma de volta em um mapa de objetos
             Map<String, Object> dados = objectMapper.readValue(
                     arquivo,
                     new TypeReference<Map<String, Object>>() {}
             );
 
+            // extrai a lista de usuarios do mapa
             List<Usuario> usuarios = objectMapper.convertValue(
                     dados.get("usuarios"),
                     new TypeReference<List<Usuario>>() {}
             );
 
+            // extrai a lista de registos de ponto do mapa
             List<RegistroPonto> registros = objectMapper.convertValue(
                     dados.get("registros"),
                     new TypeReference<List<RegistroPonto>>() {}
@@ -90,13 +95,15 @@ public class BackupService {
             // limpando ids
             usuarios.forEach(u -> u.setId(null));
             registros.forEach(r -> r.setId(null));
-
+            
+            // salva primeiro os usuarios (ja que os registros dependem deles)
             List<Usuario> usuariosSalvos = usuarioRepository.saveAll(usuarios);
 
-            // mapa por email
+            // mapa de consulta por email
             Map<String, Usuario> usuarioMap = usuariosSalvos.stream()
                     .collect(Collectors.toMap(Usuario::getEmail, u -> u));
 
+            // vincula os registros aos seus respectivos usuario atraves do email        
             for (RegistroPonto r : registros) {
                 String email = r.getUsuario().getEmail();
                 r.setUsuario(usuarioMap.get(email));
@@ -112,10 +119,12 @@ public class BackupService {
     }
 
 
-    // backup automatico a cada um minuto
+    // agenda o backup para cada uma hora
     @Scheduled(cron = "0 0 * * * *")
     public void backupAutomatico() {
         try {
+
+            // prefixo e sufixo para a nomear o arquivo
             String timestamp = LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
 
@@ -129,14 +138,16 @@ public class BackupService {
         }
     }
 
-    // listar os backups disponiveis
+    // listar os backups disponiveis a partir da pasta de backups
     public List<String> listarBackups() {
         File pasta = new File(DIRETORIO_BACKUP);
 
+        // retorna lista vazia se a pasta estiver vazia
         if (!pasta.exists()) {
             return List.of();
         }
 
+        // pega todos os arquivos da pasta, filtra os que começam com "backup" e terminam com "json", pega apenas os nomes e transforma em uma lista
         return List.of(pasta.listFiles())
                 .stream()
                 .filter(f -> f.getName().startsWith("backup_"))
