@@ -2,7 +2,9 @@ package com.pontoeletronico.backend.controller;
 
 import com.pontoeletronico.backend.dto.LoginRequestDTO;
 import com.pontoeletronico.backend.dto.LoginResponseDTO;
+import com.pontoeletronico.backend.dto.RegisterRequestDTO;
 import com.pontoeletronico.backend.model.Usuario;
+import com.pontoeletronico.backend.security.JwtService;
 import com.pontoeletronico.backend.service.UsuarioService;
 
 import org.springframework.http.HttpStatus;
@@ -15,14 +17,30 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UsuarioService service;
+    private final JwtService jwtService;
 
-    public AuthController(UsuarioService service) {
+    public AuthController(UsuarioService service, JwtService jwtService) {
         this.service = service;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
-    public Usuario register(@RequestBody Usuario usuario) {
-        return service.salvar(usuario);
+    public ResponseEntity<?> register(
+       @RequestBody RegisterRequestDTO dto
+    ) {
+
+        try {
+
+                Usuario usuario = service.salvar(dto);
+
+                return ResponseEntity.ok(usuario);
+
+        } catch (RuntimeException e) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
@@ -46,12 +64,15 @@ public class AuthController {
                 .findByEmail(dto.getEmail())
                 .get();
 
+        String token = jwtService.gerarToken(usuario);
+
         LoginResponseDTO response =
                 new LoginResponseDTO(
                         usuario.getId(),
                         usuario.getNome(),
                         usuario.getEmail(),
-                        usuario.getRole()
+                        usuario.getRole(),
+                        token
                 );
 
         return ResponseEntity.ok(response);
