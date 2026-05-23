@@ -66,6 +66,10 @@ public class UsuarioService {
         return repository.save(usuario);
     }
 
+    public Optional<Usuario> findById(Long id) {
+        return repository.findById(id);
+    }
+
     public boolean autenticar(
             String email,
             String senha
