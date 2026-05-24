@@ -9,7 +9,7 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [role, setRole] = useState('FUNCIONARIO'); // Valor padrão comum para sistemas de ponto
+  const [role, setRole] = useState('FUNCIONARIO'); 
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState('');
 
@@ -19,10 +19,8 @@ export default function Register({ onSwitchToLogin }: RegisterProps) {
     setSucesso(false);
 
     try {
-      // Envia o payload idêntico ao esperado pelo @RequestBody Usuario do Spring
       await api.post('/auth/register', { nome, email, senha, role });
       setSucesso(true);
-      // Limpa o formulário
       setNome('');
       setEmail('');
       setSenha('');

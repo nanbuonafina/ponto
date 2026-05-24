@@ -236,3 +236,15 @@ body {
 
   line-height: 1.6;
 }
+
+.requisitos-senha {
+  margin-top: 10px;
+}
+
+.ok {
+  color: green;
+}
+
+.erro {
+  color: red;
+}

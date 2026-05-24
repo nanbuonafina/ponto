@@ -24,11 +24,52 @@ function Register() {
   const [erro, setErro] =
     useState('')
 
+  const validarSenha = (
+    senha: string
+  ) => {
+
+    return {
+
+      tamanho:
+        senha.length >= 10,
+
+      maiuscula:
+        /[A-Z]/.test(senha),
+
+      numero:
+        /\d/.test(senha),
+
+      especial:
+        /[^a-zA-Z0-9]/.test(senha)
+    }
+  }
+
+  const regras =
+    validarSenha(senha)
+
+  const senhaValida =
+
+    regras.tamanho &&
+    regras.maiuscula &&
+    regras.numero &&
+    regras.especial
+
   async function cadastrar(
     e: any
   ) {
 
     e.preventDefault()
+
+    setErro('')
+
+    if (!senhaValida) {
+
+      setErro(
+        'A senha não atende os requisitos de segurança'
+      )
+
+      return
+    }
 
     try {
 
@@ -43,7 +84,9 @@ function Register() {
         }
       )
 
-      alert('Conta criada com sucesso!')
+      alert(
+        'Conta criada com sucesso!'
+      )
 
       window.location.href = '/'
 
@@ -52,6 +95,9 @@ function Register() {
       console.error(error)
 
       setErro(
+
+        error.response?.data ||
+
         'Erro ao criar conta'
       )
     }
@@ -109,6 +155,7 @@ function Register() {
                 onChange={(e) =>
                   setNome(e.target.value)
                 }
+                required
               />
             </div>
 
@@ -125,6 +172,7 @@ function Register() {
                 onChange={(e) =>
                   setEmail(e.target.value)
                 }
+                required
               />
             </div>
 
@@ -141,7 +189,77 @@ function Register() {
                 onChange={(e) =>
                   setSenha(e.target.value)
                 }
+                required
               />
+            </div>
+
+            {/* REQUISITOS DA SENHA */}
+
+            <div className="requisitos-senha">
+
+              <p
+                className={
+                  regras.tamanho
+                    ? 'ok'
+                    : 'erro-regra'
+                }
+              >
+                {
+                  regras.tamanho
+                    ? '✓'
+                    : '✗'
+                }
+
+                Mínimo de 10 caracteres
+              </p>
+
+              <p
+                className={
+                  regras.maiuscula
+                    ? 'ok'
+                    : 'erro-regra'
+                }
+              >
+                {
+                  regras.maiuscula
+                    ? '✓'
+                    : '✗'
+                }
+
+                Pelo menos uma letra maiúscula
+              </p>
+
+              <p
+                className={
+                  regras.numero
+                    ? 'ok'
+                    : 'erro-regra'
+                }
+              >
+                {
+                  regras.numero
+                    ? '✓'
+                    : '✗'
+                }
+
+                Pelo menos um número
+              </p>
+
+              <p
+                className={
+                  regras.especial
+                    ? 'ok'
+                    : 'erro-regra'
+                }
+              >
+                {
+                  regras.especial
+                    ? '✓'
+                    : '✗'
+                }
+
+                Pelo menos um caractere especial
+              </p>
             </div>
 
             <div className="role-selector">
@@ -193,6 +311,7 @@ function Register() {
                         e.target.value
                       )
                     }
+                    required
                   />
                 </div>
               )
@@ -200,6 +319,7 @@ function Register() {
 
             {
               erro && (
+
                 <span className="erro">
                   {erro}
                 </span>
@@ -209,6 +329,7 @@ function Register() {
             <button
               type="submit"
               className="register-button"
+              disabled={!senhaValida}
             >
               Criar conta
             </button>

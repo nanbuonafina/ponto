@@ -7,6 +7,12 @@ import Register from '../pages/Register/register'
 import DashboardFuncionario
 from '../pages/Dashboard/dashboardfuncionario'
 
+import Perfil from '../pages/Perfil/perfil'
+
+import AlterarSenha
+from '../pages/AlterarSenha/alterarsenha'
+
+
 function AppRoutes() {
 
   return (
@@ -26,6 +32,16 @@ function AppRoutes() {
       <Route
         path="/dashboard"
         element={<DashboardFuncionario />}
+      />
+
+      <Route
+        path="/perfil"
+        element={<Perfil />}
+      />
+
+      <Route
+        path="/alterar-senha"
+        element={<AlterarSenha />}
       />
 
     </Routes>

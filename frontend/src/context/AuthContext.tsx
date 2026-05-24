@@ -20,6 +20,13 @@ interface User {
   role: string
 }
 
+interface LoginResponse {
+
+  sucesso: boolean
+
+  mensagem: string
+}
+
 interface AuthContextType {
 
   user: User | null
@@ -29,7 +36,7 @@ interface AuthContextType {
   login: (
     email: string,
     senha: string
-  ) => Promise<boolean>
+  ) => Promise<LoginResponse>
 
   logout: () => void
 }
@@ -78,7 +85,7 @@ export function AuthProvider({
   async function login(
     email: string,
     senha: string
-  ) {
+  ): Promise<LoginResponse> {
 
     try {
 
@@ -111,13 +118,28 @@ export function AuthProvider({
         'Authorization'
       ] = `Bearer ${data.token}`
 
-      return true
+      return {
 
-    } catch (error) {
+        sucesso: true,
+
+        mensagem:
+          'Login realizado com sucesso'
+      }
+
+    } catch (error: any) {
 
       console.error(error)
 
-      return false
+      return {
+
+        sucesso: false,
+
+        mensagem:
+
+          error.response?.data ||
+
+          'Email ou senha inválidos'
+      }
     }
   }
 
@@ -130,6 +152,10 @@ export function AuthProvider({
     localStorage.removeItem('token')
 
     localStorage.removeItem('user')
+
+    delete api.defaults.headers.common[
+      'Authorization'
+    ]
   }
 
   return (

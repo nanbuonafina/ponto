@@ -38,22 +38,40 @@ function Login() {
 
     setErro('')
 
-    const sucesso =
-      await login(
-        email,
-        senha
-      )
+    try {
 
-    if (!sucesso) {
+      const resposta =
+        await login(
+          email,
+          senha
+        )
+
+      /*
+        resposta esperada:
+        {
+          sucesso: true/false,
+          mensagem: string
+        }
+      */
+
+      if (!resposta.sucesso) {
+
+        setErro(
+          resposta.mensagem
+        )
+
+        return
+      }
+
+      navigate('/dashboard')
+
+    } catch (error: any) {
 
       setErro(
-        'Email ou senha inválidos'
+        error.response?.data ||
+        'Erro ao realizar login'
       )
-
-      return
     }
-
-    navigate('/dashboard')
   }
 
   return (
@@ -104,6 +122,7 @@ function Login() {
                     e.target.value
                   )
                 }
+                required
               />
             </div>
 
@@ -120,11 +139,13 @@ function Login() {
                     e.target.value
                   )
                 }
+                required
               />
             </div>
 
             {
               erro && (
+
                 <span className="error-message">
                   {erro}
                 </span>
@@ -135,7 +156,9 @@ function Login() {
               Entrar
             </button>
           </form>
+
           <div className="register-link">
+
             Não possui conta?
 
             <Link to="/cadastro">

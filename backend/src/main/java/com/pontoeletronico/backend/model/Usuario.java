@@ -1,5 +1,7 @@
 package com.pontoeletronico.backend.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,4 +21,9 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(nullable = false)
+    private Integer tentativasFalhas = 0;
+
+    private LocalDateTime bloqueadoAte;
 }

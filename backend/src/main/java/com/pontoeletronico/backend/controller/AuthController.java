@@ -6,6 +6,7 @@ import com.pontoeletronico.backend.dto.RegisterRequestDTO;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.security.JwtService;
 import com.pontoeletronico.backend.service.UsuarioService;
+import com.pontoeletronico.backend.dto.AlterarSenhaDTO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,33 +51,64 @@ public class AuthController {
             @RequestBody LoginRequestDTO dto
     ) {
 
-        boolean autenticado =
-                service.autenticar(
-                        dto.getEmail(),
-                        dto.getSenha()
-                );
+        try {
 
-        if (!autenticado) {
+            boolean autenticado =
+                    service.autenticar(
+                            dto.getEmail(),
+                            dto.getSenha()
+                    );
+
+            if (!autenticado) {
+
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body("Email ou senha inválidos");
+            }
+
+            Usuario usuario =
+                    service.findByEmail(dto.getEmail()).get();
+
+            String token =
+                    jwtService.gerarToken(usuario);
+
+            LoginResponseDTO response =
+                    new LoginResponseDTO(
+                            usuario.getId(),
+                            usuario.getNome(),
+                            usuario.getEmail(),
+                            usuario.getRole(),
+                            token
+                    );
+
+            return ResponseEntity.ok(response);
+
+        } catch (RuntimeException e) {
+
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body("Email ou senha inválidos");
+                    .body(e.getMessage());
         }
-
-        Usuario usuario = service
-                .findByEmail(dto.getEmail())
-                .get();
-
-        String token = jwtService.gerarToken(usuario);
-
-        LoginResponseDTO response =
-                new LoginResponseDTO(
-                        usuario.getId(),
-                        usuario.getNome(),
-                        usuario.getEmail(),
-                        usuario.getRole(),
-                        token
-                );
-
-        return ResponseEntity.ok(response);
     }
-}
+
+    @PutMapping("/alterar-senha")
+    public ResponseEntity<?> alterarSenha(
+            @RequestBody AlterarSenhaDTO dto
+    ) {
+
+        try {
+
+            service.alterarSenha(dto);
+
+            return ResponseEntity.ok(
+                    "Senha alterada com sucesso"
+            );
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
+    }
+}  
