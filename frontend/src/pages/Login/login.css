@@ -1,0 +1,348 @@
+.login-container {
+
+  display: flex;
+
+  min-height: 100vh;
+}
+
+/* ======================================== */
+/* LEFT */
+/* ======================================== */
+
+.login-left {
+
+  width: 50%;
+
+  background: #F5F5EF;
+
+  padding: 60px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.brand-logo {
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: #005F3B;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+
+  font-size: 22px;
+}
+
+.brand h1 {
+
+  font-size: 24px;
+
+  color: #0B1F14;
+}
+
+.login-content {
+
+  max-width: 420px;
+}
+
+.welcome {
+
+  color: #007A4D;
+
+  font-weight: 600;
+
+  margin-bottom: 12px;
+
+  display: block;
+}
+
+.login-content h2 {
+
+  font-size: 42px;
+
+  color: #0B1F14;
+
+  margin-bottom: 16px;
+}
+
+.login-content p {
+
+  color: #6B7280;
+
+  line-height: 1.6;
+
+  margin-bottom: 36px;
+}
+
+/* ======================================== */
+/* FORM */
+/* ======================================== */
+
+.login-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.input-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.input-group label {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #0B1F14;
+}
+
+.input-group input {
+
+  height: 54px;
+
+  border-radius: 14px;
+
+  border: 1px solid #D7DDD8;
+
+  background: white;
+
+  padding: 0 18px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+
+  border-color: #007A4D;
+
+  box-shadow:
+    0 0 0 4px rgba(0, 122, 77, 0.08);
+}
+
+.login-form button {
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: #005F3B;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.login-form button:hover {
+
+  background: #007A4D;
+
+  transform: translateY(-1px);
+}
+
+.register-link {
+
+  margin-top: 28px;
+
+  color: #6B7280;
+}
+
+.register-link a {
+
+  margin-left: 8px;
+
+  color: #005F3B;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+/* ======================================== */
+/* RIGHT */
+/* ======================================== */
+
+.login-right {
+
+  width: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #03140D,
+      #071F15
+    );
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.login-right::before {
+
+  content: "";
+
+  width: 500px;
+  height: 500px;
+
+  background:
+    radial-gradient(
+      rgba(34, 197, 94, 0.15),
+      transparent 70%
+    );
+
+  position: absolute;
+
+  border-radius: 50%;
+}
+
+.glass-card {
+
+  width: 420px;
+
+  padding: 48px;
+
+  border-radius: 32px;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(18px);
+
+  text-align: center;
+
+  position: relative;
+
+  z-index: 1;
+}
+
+.clock-circle {
+
+  width: 140px;
+  height: 140px;
+
+  margin: 0 auto 32px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      rgba(34, 197, 94, 0.25),
+      rgba(34, 197, 94, 0.08)
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 60px rgba(34, 197, 94, 0.08);
+}
+
+.clock-inner {
+
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+
+  background: #22C55E;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 38px;
+}
+
+.glass-card h3 {
+
+  color: white;
+
+  font-size: 28px;
+
+  margin-bottom: 18px;
+}
+
+.glass-card p {
+
+  color: #9CA3AF;
+
+  line-height: 1.7;
+}
+
+/* ======================================== */
+/* RESPONSIVO */
+/* ======================================== */
+
+@media (max-width: 900px) {
+
+  .login-right {
+    display: none;
+  }
+
+  .login-left {
+    width: 100%;
+  }
+}
+
+.error-message {
+
+  color: #DC2626;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}

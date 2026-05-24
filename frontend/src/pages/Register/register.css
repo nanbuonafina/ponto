@@ -1,0 +1,238 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ECEBE4;
+}
+
+.register-container {
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ESQUERDA */
+
+.register-left {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  padding: 60px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 60px;
+}
+
+.brand-icon {
+  width: 54px;
+  height: 54px;
+
+  border-radius: 16px;
+
+  background: #005F3B;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+}
+
+.brand h1 {
+  color: #052814;
+  font-size: 36px;
+}
+
+.small-text {
+  color: #005F3B;
+  font-weight: bold;
+}
+
+.register-content h2 {
+  font-size: 52px;
+
+  color: #041E11;
+
+  margin-top: 12px;
+}
+
+.register-content p {
+  margin-top: 12px;
+
+  color: #59635c;
+
+  font-size: 18px;
+}
+
+/* FORM */
+
+.register-form {
+  margin-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  font-weight: bold;
+  color: #062814;
+}
+
+.input-group input {
+  height: 56px;
+
+  border-radius: 16px;
+
+  border: 1px solid #d8ddd4;
+
+  background: white;
+
+  padding: 0 18px;
+
+  font-size: 16px;
+}
+
+/* ROLE */
+
+.role-selector {
+  display: flex;
+  gap: 16px;
+}
+
+.role-selector button {
+  flex: 1;
+
+  height: 56px;
+
+  border-radius: 16px;
+
+  border: 1px solid #d8ddd4;
+
+  background: white;
+
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.role-selector .active {
+  background: #005F3B;
+  color: white;
+}
+
+/* BUTTON */
+
+.register-button {
+  margin-top: 12px;
+
+  height: 58px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: #005F3B;
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* LINKS */
+
+.login-link {
+  margin-top: 24px;
+
+  color: #5b635c;
+}
+
+.login-link a {
+  margin-left: 6px;
+
+  color: #005F3B;
+
+  text-decoration: none;
+
+  font-weight: bold;
+}
+
+.erro {
+  color: red;
+}
+
+/* DIREITA */
+
+.register-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px;
+}
+
+.glass-card {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 60px;
+
+  border-radius: 36px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.8),
+      rgba(240,244,238,0.7)
+    );
+
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.6);
+
+  text-align: center;
+}
+
+.big-icon {
+  font-size: 90px;
+}
+
+.glass-card h3 {
+  margin-top: 24px;
+
+  font-size: 40px;
+
+  color: #041E11;
+}
+
+.glass-card p {
+  margin-top: 16px;
+
+  color: #5b635c;
+
+  line-height: 1.6;
+}

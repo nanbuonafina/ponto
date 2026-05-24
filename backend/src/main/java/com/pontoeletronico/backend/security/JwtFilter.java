@@ -27,6 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
     public JwtFilter(
             JwtService jwtService
     ) {
+
         this.jwtService = jwtService;
     }
 
@@ -39,10 +40,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
     ) throws ServletException, IOException {
 
+        String path =
+                request.getServletPath();
+
+        System.out.println("PATH: " + path);
+
         String authHeader =
-                request.getHeader(
-                        "Authorization"
-                );
+                request.getHeader("Authorization");
+
+        System.out.println("AUTH HEADER: " + authHeader);
 
         if (
                 authHeader == null ||
@@ -60,7 +66,11 @@ public class JwtFilter extends OncePerRequestFilter {
         String token =
                 authHeader.substring(7);
 
+        System.out.println("TOKEN: " + token);
+
         if (!jwtService.tokenValido(token)) {
+
+            System.out.println("TOKEN INVALIDO");
 
             filterChain.doFilter(
                     request,
@@ -75,6 +85,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String role =
                 jwtService.extrairRole(token);
+
+        System.out.println("EMAIL TOKEN: " + email);
+        System.out.println("ROLE TOKEN: " + role);
 
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(

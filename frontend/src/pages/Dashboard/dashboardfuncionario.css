@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f5ef;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard {
+  min-height: 100vh;
+  padding: 30px;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #014421;
+}
+
+.header-right {
+  display: flex;
+  gap: 12px;
+}
+
+.excel-btn,
+.logout-btn {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.excel-btn {
+  background: #014421;
+  color: white;
+}
+
+.logout-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.main-card,
+.historico-card,
+.admin-card {
+  background: white;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.main-card h1 {
+  font-size: 36px;
+  color: #014421;
+}
+
+.main-card p {
+  margin-top: 10px;
+  color: #666;
+}
+
+.ponto-btn {
+  margin-top: 30px;
+  width: 100%;
+  padding: 22px;
+  border: none;
+  border-radius: 18px;
+  background: #014421;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.ponto-btn:hover {
+  opacity: 0.9;
+}
+
+.mensagem {
+  display: block;
+  margin-top: 18px;
+  color: #014421;
+  font-weight: bold;
+}
+
+.historico-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.historico-item {
+  background: #f5f5ef;
+  padding: 18px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.admin-actions button,
+.restore-label {
+  background: #014421;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+.admin-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-card h3 {
+  margin-top: 20px;
+  color: #014421;
+  font-size: 18px;
+}

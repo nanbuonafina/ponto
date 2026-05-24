@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+
+  --bg-light: #F5F5EF;
+  --card-light: #FCFCFA;
+
+  --bg-dark: #03140D;
+  --card-dark: #071F15;
+
+  --green-primary: #005F3B;
+  --green-hover: #007A4D;
+
+  --green-neon: #22C55E;
+
+  --text-light: #0B1F14;
+  --text-dark: #F3F4F6;
+
+  --text-secondary: #6B7280;
+
+  --border-light: #D7DDD8;
+  --border-dark: #143D2A;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-light);
+}
