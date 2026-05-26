@@ -2,11 +2,13 @@ package com.pontoeletronico.backend.service;
 
 import com.pontoeletronico.backend.dto.RegisterRequestDTO;
 import com.pontoeletronico.backend.model.HistoricoSenha;
+import com.pontoeletronico.backend.model.LogTipo;
 import com.pontoeletronico.backend.model.Role;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.repository.HistoricoSenhaRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
 import com.pontoeletronico.backend.dto.AlterarSenhaDTO;
+import com.pontoeletronico.backend.service.LogService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final HistoricoSenhaRepository historicoRepository;
+    private final LogService logService;
 
     @Value("${admin.codigo}")
     private String adminCode;
@@ -29,12 +32,14 @@ public class UsuarioService {
     public UsuarioService(
             UsuarioRepository repository,
             PasswordEncoder passwordEncoder,
-            HistoricoSenhaRepository historicoRepository
+            HistoricoSenhaRepository historicoRepository,
+            LogService logService
     ) {
 
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.historicoRepository = historicoRepository;
+        this.logService = logService;
     }
 
     public Optional<Usuario> findByEmail(String email) {
@@ -84,6 +89,12 @@ public class UsuarioService {
 
         Usuario usuarioSalvo =
                 repository.save(usuario);
+        
+        logService.registrar(
+                LogTipo.CADASTRO_USUARIO,
+                usuarioSalvo.getNome(),
+                "Novo usuário cadastrado"
+        );
 
         HistoricoSenha historico =
                 new HistoricoSenha();
@@ -138,11 +149,23 @@ public class UsuarioService {
 
         if (!senhaCorreta) {
 
+            logService.registrar(
+                    LogTipo.LOGIN_FALHA,
+                    usuario.getEmail(),
+                    "Tentativa de autenticação inválida"
+            );
+
             usuario.setTentativasFalhas(
                     usuario.getTentativasFalhas() + 1
             );
 
             if (usuario.getTentativasFalhas() >= 5) {
+
+                logService.registrar(
+                        LogTipo.BLOQUEIO_USUARIO,
+                        usuario.getEmail(),
+                        "Usuário bloqueado por excesso de tentativas inválidas"
+                );
 
                 usuario.setBloqueadoAte(
                         LocalDateTime.now()
@@ -161,6 +184,12 @@ public class UsuarioService {
         usuario.setTentativasFalhas(0);
 
         repository.save(usuario);
+
+        logService.registrar(
+                LogTipo.LOGIN_SUCESSO,
+                usuario.getEmail(),
+                "Login realizado com sucesso"
+        );
 
         return true;
     }
@@ -286,5 +315,11 @@ public class UsuarioService {
         );
 
         historicoRepository.save(historico);
+
+        logService.registrar(
+                LogTipo.ALTERACAO_SENHA,
+                usuario.getNome(),
+                "Senha alterada com sucesso"
+        );
     }
 }

@@ -2,10 +2,12 @@ package com.pontoeletronico.backend.service.backup;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pontoeletronico.backend.model.LogTipo;
 import com.pontoeletronico.backend.model.RegistroPonto;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.repository.RegistroPontoRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
+import com.pontoeletronico.backend.service.LogService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -25,14 +27,17 @@ public class BackupService {
     private final UsuarioRepository usuarioRepository;
     private final RegistroPontoRepository registroRepository;
     private final ObjectMapper objectMapper;
+    private final LogService logService; 
 
 
     public BackupService(UsuarioRepository usuarioRepository,
                         RegistroPontoRepository registroRepository,
-                        ObjectMapper objectMapper) {
+                        ObjectMapper objectMapper, LogService logService) {
         this.usuarioRepository = usuarioRepository;
         this.registroRepository = registroRepository;
         this.objectMapper = objectMapper;
+        this.logService = logService;
+
     }
 
     // coleta todos os registros do banco e coloca num objeto Map e transforma esse objeto em um json
@@ -50,6 +55,11 @@ public class BackupService {
         try {
             String caminho = DIRETORIO_BACKUP + "backup_manual.json";
             gerarBackupArquivo(caminho);
+            logService.registrar(
+                    LogTipo.BACKUP_MANUAL,
+                    "ADMIN",
+                    "Backup manual executado"
+            );
             return "Backup manual realizado com sucesso!";
         } catch (Exception e) {
             throw new RuntimeException("Erro ao realizar backup", e);
@@ -111,6 +121,12 @@ public class BackupService {
 
             registroRepository.saveAll(registros);
 
+            logService.registrar(
+                    LogTipo.RESTAURACAO_BACKUP,
+                    "ADMIN",
+                    "Backup restaurado: " + nomeArquivo
+            );
+
             return "Backup restaurado com sucesso a partir de: " + nomeArquivo;
 
         } catch (Exception e) {
@@ -131,6 +147,12 @@ public class BackupService {
             String caminho = DIRETORIO_BACKUP + "backup_auto_" + timestamp + ".json";
 
             gerarBackupArquivo(caminho);
+
+            logService.registrar(
+                    LogTipo.BACKUP_AUTOMATICO,
+                    "SISTEMA",
+                    "Backup automático executado"
+            );
 
             System.out.println("Backup automático executado: " + caminho);
         } catch (Exception e) {

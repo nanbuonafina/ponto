@@ -7,6 +7,7 @@ import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.repository.RegistroPontoRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
 import com.pontoeletronico.backend.service.UsuarioService;
+import com.pontoeletronico.backend.model.LogTipo;
 
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,19 @@ public class RegistroPontoService {
 
     private final UsuarioService usuarioService;
 
+    private final LogService logService;
+
     public RegistroPontoService(
             RegistroPontoRepository repository,
             UsuarioRepository usuarioRepository,
-            UsuarioService usuarioService
+            UsuarioService usuarioService,
+            LogService logService
     ) {
 
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.usuarioService = usuarioService;
+        this.logService = logService;
     }
 
 
@@ -68,7 +73,16 @@ public class RegistroPontoService {
 
         registro.setTipo(tipo);
 
-        return repository.save(registro);
+        RegistroPonto registroSalvo =
+        repository.save(registro);
+
+        logService.registrar(
+                LogTipo.REGISTRO_PONTO,
+                usuario.getNome(),
+                "Registro de ponto realizado: " + tipo.name()
+        );
+
+        return registroSalvo;
     }
 
 

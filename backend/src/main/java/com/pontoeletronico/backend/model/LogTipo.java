@@ -1,0 +1,21 @@
+package com.pontoeletronico.backend.model;
+
+public enum LogTipo {
+
+    CADASTRO_USUARIO,
+    ALTERACAO_SENHA,
+    ALTERACAO_DADOS,
+    EXCLUSAO_USUARIO,
+
+    LOGIN_SUCESSO,
+    LOGIN_FALHA,
+    BLOQUEIO_USUARIO,
+
+    REGISTRO_PONTO,
+
+    EXPORTACAO_RELATORIO,
+
+    BACKUP_MANUAL,
+    BACKUP_AUTOMATICO,
+    RESTAURACAO_BACKUP
+}
