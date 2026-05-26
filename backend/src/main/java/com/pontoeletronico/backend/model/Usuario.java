@@ -1,5 +1,6 @@
 package com.pontoeletronico.backend.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -26,4 +27,8 @@ public class Usuario {
     private Integer tentativasFalhas = 0;
 
     private LocalDateTime bloqueadoAte;
+
+    private String genero;
+
+    private LocalDate dataNascimento;
 }

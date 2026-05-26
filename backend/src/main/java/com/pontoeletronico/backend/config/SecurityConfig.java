@@ -27,6 +27,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.security.config.Customizer;
+
 import java.util.List;
 
 @Configuration
@@ -52,44 +54,25 @@ public class SecurityConfig {
 
             .csrf(csrf -> csrf.disable())
 
+            .redirectToHttps(Customizer.withDefaults())
+
             .authorizeHttpRequests(auth -> auth
-
-                .requestMatchers(
-                        "/auth/**"
-                ).permitAll()
-
-                .requestMatchers(
-                        "/relatorios/**"
-                ).authenticated()
-
-                .requestMatchers(
-                        "/ponto/**"
-                ).authenticated()
-
-                .requestMatchers(
-                        "/admin/**"
-                ).authenticated()
-
-                .requestMatchers(
-                        HttpMethod.OPTIONS,
-                        "/**"
-                ).permitAll()
-
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/relatorios/**").authenticated()
+                .requestMatchers("/ponto/**").authenticated()
+                .requestMatchers("/admin/**").authenticated()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
             )
 
             .sessionManagement(session ->
-                    session.sessionCreationPolicy(
-                            SessionCreationPolicy.STATELESS
-                    )
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            .addFilterBefore(
-                    jwtFilter,
-                    UsernamePasswordAuthenticationFilter.class
-            );
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+
     }
 
     @Bean

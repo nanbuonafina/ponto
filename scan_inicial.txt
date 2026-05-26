@@ -1,0 +1,87 @@
+# Nmap 7.94SVN scan initiated Tue May 26 20:15:25 2026 as: nmap -sV -O --script vuln -oN scan_inicial.txt 192.168.1.14
+Pre-scan script results:
+| broadcast-avahi-dos: 
+|   Discovered hosts:
+|     224.0.0.251
+|   After NULL UDP avahi packet DoS (CVE-2011-1002).
+|_  Hosts are all up (not vulnerable).
+Nmap scan report for integrador (192.168.1.14)
+Host is up (0.000066s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT      STATE    SERVICE       VERSION
+22/tcp    open     ssh           OpenSSH 9.6p1 Ubuntu 3ubuntu13.16 (Ubuntu Linux; protocol 2.0)
+5432/tcp  filtered postgresql
+8443/tcp  open     ssl/https-alt
+| fingerprint-strings: 
+|   FourOhFourRequest: 
+|     HTTP/1.1 403 
+|     Content-Length: 0
+|     Date: Tue, 26 May 2026 20:16:12 GMT
+|     Connection: close
+|   GetRequest, HTTPOptions: 
+|     HTTP/1.1 403 
+|     Vary: Origin
+|     Vary: Access-Control-Request-Method
+|     Vary: Access-Control-Request-Headers
+|     X-Content-Type-Options: nosniff
+|     X-XSS-Protection: 0
+|     Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+|     Pragma: no-cache
+|     Expires: 0
+|     Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+|     X-Frame-Options: DENY
+|     Content-Length: 0
+|     Date: Tue, 26 May 2026 20:16:12 GMT
+|     Connection: close
+|   RTSPRequest: 
+|     HTTP/1.1 400 
+|     Content-Type: text/html;charset=utf-8
+|     Content-Language: en
+|     Content-Length: 435
+|     Date: Tue, 26 May 2026 20:16:17 GMT
+|     Connection: close
+|     <!doctype html><html lang="en"><head><title>HTTP Status 400 
+|     Request</title><style type="text/css">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 400 
+|_    Request</h1></body></html>
+10000/tcp open     java-rmi      Java RMI
+|_http-vuln-cve2006-3392: ERROR: Script execution failed (use -d to debug)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8443-TCP:V=7.94SVN%T=SSL%I=7%D=5/26%Time=6A15FF8C%P=x86_64-pc-linux
+SF:-gnu%r(GetRequest,1A0,"HTTP/1\.1\x20403\x20\r\nVary:\x20Origin\r\nVary:
+SF:\x20Access-Control-Request-Method\r\nVary:\x20Access-Control-Request-He
+SF:aders\r\nX-Content-Type-Options:\x20nosniff\r\nX-XSS-Protection:\x200\r
+SF:\nCache-Control:\x20no-cache,\x20no-store,\x20max-age=0,\x20must-revali
+SF:date\r\nPragma:\x20no-cache\r\nExpires:\x200\r\nStrict-Transport-Securi
+SF:ty:\x20max-age=31536000\x20;\x20includeSubDomains\r\nX-Frame-Options:\x
+SF:20DENY\r\nContent-Length:\x200\r\nDate:\x20Tue,\x2026\x20May\x202026\x2
+SF:020:16:12\x20GMT\r\nConnection:\x20close\r\n\r\n")%r(HTTPOptions,1A0,"H
+SF:TTP/1\.1\x20403\x20\r\nVary:\x20Origin\r\nVary:\x20Access-Control-Reque
+SF:st-Method\r\nVary:\x20Access-Control-Request-Headers\r\nX-Content-Type-
+SF:Options:\x20nosniff\r\nX-XSS-Protection:\x200\r\nCache-Control:\x20no-c
+SF:ache,\x20no-store,\x20max-age=0,\x20must-revalidate\r\nPragma:\x20no-ca
+SF:che\r\nExpires:\x200\r\nStrict-Transport-Security:\x20max-age=31536000\
+SF:x20;\x20includeSubDomains\r\nX-Frame-Options:\x20DENY\r\nContent-Length
+SF::\x200\r\nDate:\x20Tue,\x2026\x20May\x202026\x2020:16:12\x20GMT\r\nConn
+SF:ection:\x20close\r\n\r\n")%r(FourOhFourRequest,5C,"HTTP/1\.1\x20403\x20
+SF:\r\nContent-Length:\x200\r\nDate:\x20Tue,\x2026\x20May\x202026\x2020:16
+SF::12\x20GMT\r\nConnection:\x20close\r\n\r\n")%r(RTSPRequest,24E,"HTTP/1\
+SF:.1\x20400\x20\r\nContent-Type:\x20text/html;charset=utf-8\r\nContent-La
+SF:nguage:\x20en\r\nContent-Length:\x20435\r\nDate:\x20Tue,\x2026\x20May\x
+SF:202026\x2020:16:17\x20GMT\r\nConnection:\x20close\r\n\r\n<!doctype\x20h
+SF:tml><html\x20lang=\"en\"><head><title>HTTP\x20Status\x20400\x20\xe2\x80
+SF:\x93\x20Bad\x20Request</title><style\x20type=\"text/css\">body\x20{font
+SF:-family:Tahoma,Arial,sans-serif;}\x20h1,\x20h2,\x20h3,\x20b\x20{color:w
+SF:hite;background-color:#525D76;}\x20h1\x20{font-size:22px;}\x20h2\x20{fo
+SF:nt-size:16px;}\x20h3\x20{font-size:14px;}\x20p\x20{font-size:12px;}\x20
+SF:a\x20{color:black;}\x20\.line\x20{height:1px;background-color:#525D76;b
+SF:order:none;}</style></head><body><h1>HTTP\x20Status\x20400\x20\xe2\x80\
+SF:x93\x20Bad\x20Request</h1></body></html>");
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6.32
+OS details: Linux 2.6.32
+Network Distance: 0 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue May 26 20:17:40 2026 -- 1 IP address (1 host up) scanned in 135.52 seconds

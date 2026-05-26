@@ -1,0 +1,5 @@
+[26/05/2026 19:56:02] [CADASTRO_USUARIO] [USUARIO: roberto] Novo usuário cadastrado
+[26/05/2026 19:56:16] [LOGIN_SUCESSO] [USUARIO: roberto@gmail.com] Login realizado com sucesso
+[26/05/2026 19:56:18] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: ENTRADA
+[26/05/2026 19:56:19] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: SAIDA
+[26/05/2026 20:23:27] [LOGIN_SUCESSO] [USUARIO: roberto@gmail.com] Login realizado com sucesso

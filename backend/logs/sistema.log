@@ -1,0 +1,8 @@
+[26/05/2026 21:00:00] [BACKUP_AUTOMATICO] [USUARIO: SISTEMA] Backup automático executado
+[26/05/2026 21:34:35] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: ENTRADA
+[26/05/2026 21:34:42] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: SAIDA
+[26/05/2026 21:34:57] [LOGIN_SUCESSO] [USUARIO: roberto@gmail.com] Login realizado com sucesso
+[26/05/2026 21:35:18] [CADASTRO_USUARIO] [USUARIO: amanda] Novo usuário cadastrado
+[26/05/2026 21:35:26] [LOGIN_SUCESSO] [USUARIO: amanda@gmail.com] Login realizado com sucesso
+[26/05/2026 21:35:32] [REGISTRO_PONTO] [USUARIO: amanda] Registro de ponto realizado: ENTRADA
+[26/05/2026 21:35:32] [REGISTRO_PONTO] [USUARIO: amanda] Registro de ponto realizado: SAIDA
