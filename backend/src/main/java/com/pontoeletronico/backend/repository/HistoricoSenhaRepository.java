@@ -14,4 +14,6 @@ public interface HistoricoSenhaRepository
     findTop3ByUsuarioOrderByDataAlteracaoDesc(
             Usuario usuario
     );
+
+    void deleteByUsuarioId(Long usuarioId);
 }

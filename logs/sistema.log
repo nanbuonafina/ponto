@@ -3,3 +3,19 @@
 [26/05/2026 19:56:18] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: ENTRADA
 [26/05/2026 19:56:19] [REGISTRO_PONTO] [USUARIO: roberto] Registro de ponto realizado: SAIDA
 [26/05/2026 20:23:27] [LOGIN_SUCESSO] [USUARIO: roberto@gmail.com] Login realizado com sucesso
+[29/05/2026 21:26:47] [CADASTRO_USUARIO] [USUARIO: admin_nanda] Novo usuário cadastrado
+[29/05/2026 21:27:30] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 21:30:11] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 21:51:47] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:00:14] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:11:52] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:14:32] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:14:42] [BACKUP_MANUAL] [USUARIO: ADMIN] Backup manual executado
+[29/05/2026 22:15:57] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:32:27] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 22:32:38] [BACKUP_MANUAL] [USUARIO: ADMIN] Backup manual executado
+[29/05/2026 22:32:50] [RESTAURACAO_BACKUP] [USUARIO: ADMIN] Backup restaurado: backup_manual.json
+[29/05/2026 22:33:57] [EXCLUSAO_USUARIO] [USUARIO: nanda] Usuário removido pelo administrador
+[29/05/2026 22:34:06] [RESTAURACAO_BACKUP] [USUARIO: ADMIN] Backup restaurado: backup_manual.json
+[29/05/2026 22:37:55] [CADASTRO_USUARIO] [USUARIO: Maria Clara] Novo usuário cadastrado
+[29/05/2026 22:42:12] [LOGIN_SUCESSO] [USUARIO: clara@email.com] Login realizado com sucesso

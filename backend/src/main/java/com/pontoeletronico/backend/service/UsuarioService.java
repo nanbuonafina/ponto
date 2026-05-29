@@ -7,8 +7,12 @@ import com.pontoeletronico.backend.model.Role;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.repository.HistoricoSenhaRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
+import com.pontoeletronico.backend.dto.AdminAtualizarUsuarioDTO;
 import com.pontoeletronico.backend.dto.AlterarSenhaDTO;
+import com.pontoeletronico.backend.dto.AtualizarUsuarioDTO;
 import com.pontoeletronico.backend.service.LogService;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +29,7 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final HistoricoSenhaRepository historicoRepository;
     private final LogService logService;
+    private final HistoricoSenhaRepository historicoSenhaRepository;;
 
     @Value("${admin.codigo}")
     private String adminCode;
@@ -33,23 +38,27 @@ public class UsuarioService {
             UsuarioRepository repository,
             PasswordEncoder passwordEncoder,
             HistoricoSenhaRepository historicoRepository,
-            LogService logService
+            LogService logService,
+            HistoricoSenhaRepository historicoSenhaRepository
     ) {
 
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.historicoRepository = historicoRepository;
         this.logService = logService;
+        this.historicoSenhaRepository = historicoSenhaRepository;
     }
 
     public Optional<Usuario> findByEmail(String email) {
-
         return repository.findByEmail(email);
     }
 
     public Optional<Usuario> findById(Long id) {
-
         return repository.findById(id);
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return repository.findAll();
     }
 
     public Usuario salvar(RegisterRequestDTO dto) {
@@ -321,5 +330,72 @@ public class UsuarioService {
                 usuario.getNome(),
                 "Senha alterada com sucesso"
         );
+    }
+
+    public Usuario atualizarPerfil(
+        String email,
+        AtualizarUsuarioDTO dto
+    ) {
+
+        Usuario usuario = repository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("Usuário não encontrado")
+                );
+
+        usuario.setNome(dto.getNome());
+        usuario.setGenero(dto.getGenero());
+        usuario.setDataNascimento(dto.getDataNascimento());
+
+        Usuario atualizado = repository.save(usuario);
+
+        logService.registrar(
+                LogTipo.ALTERACAO_USUARIO,
+                usuario.getNome(),
+                "Perfil atualizado"
+        );
+
+        return atualizado;
+    }
+
+    @Transactional
+    public void excluirUsuario(Long id) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Usuário não encontrado")
+                );
+        
+        historicoSenhaRepository.deleteByUsuarioId(id);
+        repository.delete(usuario);
+
+        logService.registrar(
+                LogTipo.EXCLUSAO_USUARIO,
+                usuario.getNome(),
+                "Usuário removido pelo administrador"
+        );
+    }
+
+    public Usuario adminAtualizarUsuario(
+        Long id,
+        AdminAtualizarUsuarioDTO dto
+    ) {
+
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Usuário não encontrado")
+                );
+
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setRole(dto.getRole());
+
+        Usuario atualizado = repository.save(usuario);
+
+        logService.registrar(
+                LogTipo.ALTERACAO_USUARIO,
+                usuario.getNome(),
+                "Usuário atualizado pelo administrador"
+        );
+
+        return atualizado;
     }
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pontoeletronico.backend.model.LogTipo;
 import com.pontoeletronico.backend.model.RegistroPonto;
 import com.pontoeletronico.backend.model.Usuario;
+import com.pontoeletronico.backend.repository.HistoricoSenhaRepository;
+import com.pontoeletronico.backend.model.HistoricoSenha;
 import com.pontoeletronico.backend.repository.RegistroPontoRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
 import com.pontoeletronico.backend.service.LogService;
@@ -22,19 +24,21 @@ import java.util.stream.Collectors;
 @Service
 public class BackupService {
 
-    private static final String DIRETORIO_BACKUP = "backups/";
+    private static final String DIRETORIO_BACKUP = "backend/backups/";
 
     private final UsuarioRepository usuarioRepository;
     private final RegistroPontoRepository registroRepository;
     private final ObjectMapper objectMapper;
     private final LogService logService; 
+    private final HistoricoSenhaRepository historicoSenhaRepository;
 
 
     public BackupService(UsuarioRepository usuarioRepository,
                         RegistroPontoRepository registroRepository,
-                        ObjectMapper objectMapper, LogService logService) {
+                        ObjectMapper objectMapper, LogService logService, HistoricoSenhaRepository historicoSenhaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.registroRepository = registroRepository;
+        this.historicoSenhaRepository = historicoSenhaRepository;
         this.objectMapper = objectMapper;
         this.logService = logService;
 
@@ -46,6 +50,7 @@ public class BackupService {
 
         dados.put("usuarios", usuarioRepository.findAll());
         dados.put("registros", registroRepository.findAll());
+        dados.put("historicosSenha", historicoSenhaRepository.findAll());
 
         objectMapper.writeValue(new File(caminho), dados);
     }    
@@ -54,6 +59,10 @@ public class BackupService {
     public String realizarBackup() {
         try {
             String caminho = DIRETORIO_BACKUP + "backup_manual.json";
+            System.out.println(
+                "DIRETORIO ATUAL: "
+                + System.getProperty("user.dir")
+            );
             gerarBackupArquivo(caminho);
             logService.registrar(
                     LogTipo.BACKUP_MANUAL,
@@ -98,13 +107,21 @@ public class BackupService {
                     new TypeReference<List<RegistroPonto>>() {}
             );
 
+            // extrai a lista de historicos de senha do mapa
+            List<HistoricoSenha> historicosSenha = objectMapper.convertValue(
+                    dados.get("historicosSenha"),
+                    new TypeReference<List<HistoricoSenha>>() {}
+            );
+
             // limpa antes de restaurar
             registroRepository.deleteAll();
+            historicoSenhaRepository.deleteAll();
             usuarioRepository.deleteAll();
 
             // limpando ids
             usuarios.forEach(u -> u.setId(null));
             registros.forEach(r -> r.setId(null));
+            historicosSenha.forEach(h -> h.setId(null));
             
             // salva primeiro os usuarios (ja que os registros dependem deles)
             List<Usuario> usuariosSalvos = usuarioRepository.saveAll(usuarios);
@@ -120,6 +137,22 @@ public class BackupService {
             }
 
             registroRepository.saveAll(registros);
+
+            for (HistoricoSenha h : historicosSenha) {
+
+                if (h.getUsuario() == null) {
+                    continue;
+                }
+
+                String email = h.getUsuario().getEmail();
+
+                Usuario usuarioRestaurado =
+                        usuarioMap.get(email);
+
+                h.setUsuario(usuarioRestaurado);
+            }
+
+            historicoSenhaRepository.saveAll(historicosSenha);
 
             logService.registrar(
                     LogTipo.RESTAURACAO_BACKUP,
