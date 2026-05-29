@@ -2,15 +2,20 @@ package com.pontoeletronico.backend.service;
 
 import com.pontoeletronico.backend.dto.RegisterRequestDTO;
 import com.pontoeletronico.backend.model.HistoricoSenha;
+import com.pontoeletronico.backend.model.LogSistema;
 import com.pontoeletronico.backend.model.LogTipo;
 import com.pontoeletronico.backend.model.Role;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.repository.HistoricoSenhaRepository;
+import com.pontoeletronico.backend.repository.RegistroPontoRepository;
 import com.pontoeletronico.backend.repository.UsuarioRepository;
 import com.pontoeletronico.backend.dto.AdminAtualizarUsuarioDTO;
 import com.pontoeletronico.backend.dto.AlterarSenhaDTO;
 import com.pontoeletronico.backend.dto.AtualizarUsuarioDTO;
+import com.pontoeletronico.backend.dto.DashboardAdminDTO;
 import com.pontoeletronico.backend.service.LogService;
+import com.pontoeletronico.backend.service.backup.BackupService;
+import com.pontoeletronico.backend.repository.LogSistemaRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +35,10 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final HistoricoSenhaRepository historicoRepository;
     private final LogService logService;
-    private final HistoricoSenhaRepository historicoSenhaRepository;;
+    private final HistoricoSenhaRepository historicoSenhaRepository;
+    private final RegistroPontoRepository registroRepository;
+    private final BackupService backupService;
+    private final LogSistemaRepository logRepository;
 
     @Value("${admin.codigo}")
     private String adminCode;
@@ -39,7 +48,10 @@ public class UsuarioService {
             PasswordEncoder passwordEncoder,
             HistoricoSenhaRepository historicoRepository,
             LogService logService,
-            HistoricoSenhaRepository historicoSenhaRepository
+            HistoricoSenhaRepository historicoSenhaRepository,
+            RegistroPontoRepository registroRepository,
+            BackupService backupService,
+            LogSistemaRepository logRepository
     ) {
 
         this.repository = repository;
@@ -47,6 +59,9 @@ public class UsuarioService {
         this.historicoRepository = historicoRepository;
         this.logService = logService;
         this.historicoSenhaRepository = historicoSenhaRepository;
+        this.registroRepository = registroRepository;
+        this.backupService = backupService;
+        this.logRepository = logRepository;
     }
 
     public Optional<Usuario> findByEmail(String email) {
@@ -397,5 +412,139 @@ public class UsuarioService {
         );
 
         return atualizado;
+    }
+
+    private long contarLinhasLog() {
+
+        try {
+
+                java.nio.file.Path path =
+                        java.nio.file.Paths.get(
+                                "logs/sistema.log"
+                        );
+
+                if (!java.nio.file.Files.exists(path)) {
+                return 0;
+                }
+
+                return java.nio.file.Files.lines(path)
+                        .count();
+
+        } catch (Exception e) {
+
+                return 0;
+        }
+    }
+
+    public DashboardAdminDTO obterDashboard() {
+
+        LocalDateTime inicioHoje =
+                LocalDate.now().atStartOfDay();
+
+        long totalUsuarios =
+                repository.count();
+
+        long totalAdministradores =
+                repository.findAll()
+                        .stream()
+                        .filter(u ->
+                                u.getRole().name().equals("ADMIN")
+                        )
+                        .count();
+
+        long totalFuncionarios =
+                totalUsuarios - totalAdministradores;
+
+        long usuariosBloqueados =
+                repository.findAll()
+                        .stream()
+                        .filter(u ->
+                                u.getBloqueadoAte() != null
+                                        &&
+                                u.getBloqueadoAte()
+                                        .isAfter(LocalDateTime.now())
+                        )
+                        .count();
+
+        long totalRegistrosPonto =
+                registroRepository.count();
+
+        long registrosHoje =
+                registroRepository.findAll()
+                        .stream()
+                        .filter(r ->
+                                r.getDataHora()
+                                        .toLocalDate()
+                                        .equals(LocalDate.now())
+                        )
+                        .count();
+
+        long totalBackups =
+                backupService.listarBackups().size();
+
+        long totalLogs =
+                logRepository.count();
+
+        long loginsHoje =
+                logRepository.countByTipoAndDataHoraAfter(
+                        LogTipo.LOGIN_SUCESSO,
+                        inicioHoje
+                );
+
+        long falhasLoginHoje =
+                logRepository.countByTipoAndDataHoraAfter(
+                        LogTipo.LOGIN_FALHA,
+                        inicioHoje
+                );
+
+        List<LogSistema> ultimosLogs =
+                logRepository.findTop20ByOrderByDataHoraDesc();
+
+        return new DashboardAdminDTO(
+                totalUsuarios,
+                totalAdministradores,
+                totalFuncionarios,
+                usuariosBloqueados,
+                totalRegistrosPonto,
+                registrosHoje,
+                totalBackups,
+                totalLogs,
+                loginsHoje,
+                falhasLoginHoje,
+                ultimosLogs
+        );
+    }
+
+    public List<Usuario> listarUsuariosFiltrados(
+                String nome,
+                String email,
+                String role
+    ) {
+
+        return repository.findAll()
+                .stream()
+                .filter(u ->
+                        nome == null ||
+                        u.getNome()
+                                .toLowerCase()
+                                .contains(
+                                        nome.toLowerCase()
+                                )
+                )
+                .filter(u ->
+                        email == null ||
+                        u.getEmail()
+                                .toLowerCase()
+                                .contains(
+                                        email.toLowerCase()
+                                )
+                )
+                .filter(u ->
+                        role == null ||
+                        u.getRole()
+                                .name()
+                                .equalsIgnoreCase(role)
+                )
+                .toList();
     }
 }

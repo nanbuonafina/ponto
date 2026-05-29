@@ -1,15 +1,21 @@
 package com.pontoeletronico.backend.controller;
 
 import com.pontoeletronico.backend.dto.AdminAtualizarUsuarioDTO;
+import com.pontoeletronico.backend.dto.DashboardAdminDTO;
 import com.pontoeletronico.backend.model.RegistroPonto;
 import com.pontoeletronico.backend.model.Usuario;
 import com.pontoeletronico.backend.service.RegistroPontoService;
 import com.pontoeletronico.backend.service.UsuarioService;
 import com.pontoeletronico.backend.service.backup.BackupService;
+import com.pontoeletronico.backend.dto.DashboardAdminDTO;
+import com.pontoeletronico.backend.service.LogService;
+import com.pontoeletronico.backend.model.LogSistema;
+import com.pontoeletronico.backend.model.LogTipo;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,15 +30,19 @@ public class AdminController {
 
     private final BackupService backupService;
 
+    private final LogService logService;
+
     public AdminController(
             UsuarioService usuarioService,
             RegistroPontoService pontoService,
-            BackupService backupService
+            BackupService backupService,
+            LogService logService
     ) {
 
         this.usuarioService = usuarioService;
         this.pontoService = pontoService;
         this.backupService = backupService;
+        this.logService = logService;
     }
 
     // =========================
@@ -40,9 +50,17 @@ public class AdminController {
     // =========================
 
     @GetMapping("/usuarios")
-    public List<Usuario> listarUsuarios() {
+    public List<Usuario> listarUsuarios(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String role
+    ) {
 
-        return usuarioService.listarUsuarios();
+        return usuarioService.listarUsuariosFiltrados(
+                nome,
+                email,
+                role
+        );
     }
 
     @DeleteMapping("/usuarios/{id}")
@@ -107,5 +125,52 @@ public class AdminController {
     ) {
 
         return backupService.restaurarBackup(arquivo);
+    }
+
+    @GetMapping("/dashboard")
+    public DashboardAdminDTO dashboard() {
+
+        return usuarioService.obterDashboard();
+    }
+
+    // =========================
+    // LOGS
+    // =========================
+
+    @GetMapping("/logs")
+    public List<LogSistema> listarLogs() {
+
+        return logService.listarTodos();
+    }
+
+    @GetMapping("/logs/recentes")
+    public List<LogSistema> listarLogsRecentes() {
+
+        return logService.listarRecentes();
+    }
+
+    @GetMapping("/logs/filtro")
+    public List<LogSistema> filtrarLogs(
+
+            @RequestParam(required = false)
+            LogTipo tipo,
+
+            @RequestParam(required = false)
+            String usuario,
+
+            @RequestParam(required = false)
+            LocalDateTime inicio,
+
+            @RequestParam(required = false)
+            LocalDateTime fim
+
+    ) {
+
+        return logService.filtrarLogs(
+                tipo,
+                usuario,
+                inicio,
+                fim
+        );
     }
 }

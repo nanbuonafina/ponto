@@ -19,3 +19,10 @@
 [29/05/2026 22:34:06] [RESTAURACAO_BACKUP] [USUARIO: ADMIN] Backup restaurado: backup_manual.json
 [29/05/2026 22:37:55] [CADASTRO_USUARIO] [USUARIO: Maria Clara] Novo usuário cadastrado
 [29/05/2026 22:42:12] [LOGIN_SUCESSO] [USUARIO: clara@email.com] Login realizado com sucesso
+[29/05/2026 23:18:21] [LOGIN_SUCESSO] [USUARIO: clara@email.com] Login realizado com sucesso
+[29/05/2026 23:18:38] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 23:19:27] [EXCLUSAO_USUARIO] [USUARIO: amanda] Usuário removido pelo administrador
+[29/05/2026 23:20:01] [BACKUP_MANUAL] [USUARIO: ADMIN] Backup manual executado
+[29/05/2026 23:30:04] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 23:38:09] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso
+[29/05/2026 23:55:25] [LOGIN_SUCESSO] [USUARIO: admin@email.com] Login realizado com sucesso

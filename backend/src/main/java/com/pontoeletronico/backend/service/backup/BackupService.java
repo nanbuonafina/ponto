@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.HashMap;
@@ -76,6 +77,7 @@ public class BackupService {
     }
 
     // lê um arquivo json, apaga tudo o que existe no banco de dados atual e reinsere os dados do arquivo
+    @Transactional
     public String restaurarBackup(String nomeArquivo) {
         try {
             // validacao de seguranca do nome do arquivo
