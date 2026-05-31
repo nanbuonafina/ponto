@@ -1,0 +1,49 @@
+.logs-container {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.card-log {
+
+  background: white;
+
+  border-left:
+    5px solid var(--green-primary);
+
+  border-radius: 12px;
+
+  padding: 16px;
+
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.04);
+
+  transition: .2s;
+}
+
+.card-log:hover {
+
+  transform: translateY(-2px);
+}
+
+.card-log strong {
+
+  display: block;
+
+  color: var(--green-primary);
+
+  margin-bottom: 8px;
+}
+
+.card-log p {
+
+  margin-bottom: 4px;
+}
+
+.card-log small {
+
+  color: var(--text-secondary);
+}

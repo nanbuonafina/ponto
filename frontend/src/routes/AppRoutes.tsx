@@ -7,11 +7,20 @@ import Register from '../pages/Register/register'
 import DashboardFuncionario
 from '../pages/Dashboard/dashboardfuncionario'
 
-import Perfil from '../pages/Perfil/perfil'
+import Perfil
+from '../pages/Perfil/perfil'
 
 import AlterarSenha
 from '../pages/AlterarSenha/alterarsenha'
 
+import AdminDashboard
+from '../pages/Admin/AdminDashboard'
+
+import PrivateRoute
+from './PrivateRoute'
+
+import AdminRoute
+from './AdminRoute'
 
 function AppRoutes() {
 
@@ -31,17 +40,38 @@ function AppRoutes() {
 
       <Route
         path="/dashboard"
-        element={<DashboardFuncionario />}
+        element={
+          <PrivateRoute>
+            <DashboardFuncionario />
+          </PrivateRoute>
+        }
       />
 
       <Route
         path="/perfil"
-        element={<Perfil />}
+        element={
+          <PrivateRoute>
+            <Perfil />
+          </PrivateRoute>
+        }
       />
 
       <Route
         path="/alterar-senha"
-        element={<AlterarSenha />}
+        element={
+          <PrivateRoute>
+            <AlterarSenha />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        }
       />
 
     </Routes>

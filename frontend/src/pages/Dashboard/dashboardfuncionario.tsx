@@ -323,32 +323,20 @@ function DashboardFuncionario() {
         </section>
 
         {/* PAINEL ADMIN */}
-        {usuario.tipo === 'ADMIN' && (
+        {usuario.role === 'ADMIN' && (
           <section className="admin-card">
 
             <h2>Painel Administrativo</h2>
 
             <div className="admin-actions">
 
-              <button onClick={carregarTodosPontos}>
-                Ver Todos os Pontos
+              <button
+                onClick={() =>
+                  window.location.href = '/admin'
+                }
+              >
+                Abrir Painel Administrativo
               </button>
-
-              <button onClick={realizarBackup}>
-                Backup Banco
-              </button>
-
-              <label className="restore-label">
-
-                Restore Banco
-
-                <input
-                  type="file"
-                  hidden
-                  onChange={restoreBanco}
-                />
-
-              </label>
 
             </div>
 

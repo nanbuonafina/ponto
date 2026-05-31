@@ -33,6 +33,8 @@ interface AuthContextType {
 
   token: string | null
 
+  loading: boolean
+
   login: (
     email: string,
     senha: string
@@ -55,6 +57,9 @@ export function AuthProvider({
 
   const [token, setToken] =
     useState<string | null>(null)
+
+  const [loading, setLoading] =
+    useState(true)
 
   useEffect(() => {
 
@@ -79,6 +84,8 @@ export function AuthProvider({
         'Authorization'
       ] = `Bearer ${tokenStorage}`
     }
+
+    setLoading(false)
 
   }, [])
 
@@ -164,6 +171,7 @@ export function AuthProvider({
       value={{
         user,
         token,
+        loading,
         login,
         logout
       }}

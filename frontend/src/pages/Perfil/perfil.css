@@ -148,3 +148,37 @@
 
   cursor: pointer;
 }
+
+.info-item input,
+.info-item select {
+
+  width: 100%;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  border: 1px solid var(--border-light);
+
+  margin-top: 6px;
+}
+
+.editar-button {
+
+  background: var(--green-primary);
+
+  color: white;
+
+  border: none;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.editar-button:hover {
+
+  background: var(--green-hover);
+}

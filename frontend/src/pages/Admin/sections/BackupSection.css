@@ -1,0 +1,41 @@
+.backup-container {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.backup-actions {
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+
+.backup-select {
+
+  max-width: 450px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  border: 1px solid var(--border-light);
+}
+
+.warning-box {
+
+  background: #FEF3C7;
+
+  border: 1px solid #FCD34D;
+
+  color: #92400E;
+
+  padding: 16px;
+
+  border-radius: 10px;
+}
