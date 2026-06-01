@@ -1,62 +1,85 @@
-import { useState } from 'react'
+import './AdminDashboard.css'
 
-import Sidebar from './components/Sidebar'
-import DashboardCards from './components/DashboardCards' 
-import UsuariosSection from './sections/UsuariosSection'
-import LogsSection from './sections/LogsSection'
-import BackupSection from './sections/BackupSection'
-import RelatoriosSection from './sections/RelatoriosSection'
+import DashboardCards
+from './components/DashboardCards'
 
-function AdminDashboard() {
+import UsuariosSection
+from './sections/UsuariosSection'
 
-  const [aba, setAba] =
-    useState('dashboard')
+import LogsSection
+from './sections/LogsSection'
+
+import BackupSection
+from './sections/BackupSection'
+
+import RelatoriosSection
+from './sections/RelatoriosSection'
+
+export default function AdminDashboard() {
 
   return (
 
-    <div
-      style={{
-        display: 'flex',
-        minHeight: '100vh'
-      }}
-    >
+    <div className="admin-page">
 
-      <Sidebar
-        aba={aba}
-        setAba={setAba}
-      />
+      <header className="admin-header">
 
-      <main
-        style={{
-          flex: 1,
-          padding: '30px'
-        }}
-      >
+        <div className="admin-title">
 
-        {aba === 'dashboard' && (
-          <DashboardCards />
-        )}
+          <h1>
+            Painel Administrativo
+          </h1>
 
-        {aba === 'usuarios' && (
-          <UsuariosSection />
-        )}
+          <p>
+            Gestão completa do sistema
+          </p>
 
-        {aba === 'logs' && (
-          <LogsSection />
-        )}
+        </div>
 
-        {aba === 'backup' && (
+        <div className="admin-actions">
+
+          <button
+            className="admin-btn"
+            onClick={() =>
+              window.location.href =
+                '/dashboard'
+            }
+          >
+            Voltar ao Sistema
+          </button>
+
+        </div>
+
+      </header>
+
+      <section className="dashboard-area">
+
+        <DashboardCards />
+
+      </section>
+
+      <section className="admin-layout">
+
+        <div className="backup-column">
+
           <BackupSection />
-        )}
 
-        {aba === 'relatorios' && (
+        </div>
+
+        <div className="usuarios-column">
+
+          <UsuariosSection />
           <RelatoriosSection />
-        )}
 
-      </main>
+        </div>
+
+        <div className="logs-column">
+
+          <LogsSection />
+
+        </div>
+
+      </section>
 
     </div>
   )
 }
-
-export default AdminDashboard

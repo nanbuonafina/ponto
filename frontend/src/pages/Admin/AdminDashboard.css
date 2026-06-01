@@ -1,66 +1,182 @@
 .admin-page {
 
-  padding: 30px;
+  min-height: 100vh;
+
+  background: #F5F5EF;
+
+  padding: 40px;
 }
 
-.cards-grid {
+/* ====================== */
+/* HEADER */
+/* ====================== */
+
+.admin-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 32px;
+}
+
+.admin-title h1 {
+
+  font-size: 38px;
+
+  font-weight: 700;
+
+  color: #0B1F14;
+}
+
+.admin-title p {
+
+  color: #6B7280;
+
+  margin-top: 8px;
+
+  font-size: 15px;
+}
+
+.admin-actions {
+
+  display: flex;
+
+  gap: 12px;
+}
+
+.admin-btn {
+
+  height: 52px;
+
+  padding: 0 24px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: #005F3B;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.admin-btn:hover {
+
+  background: #007A4D;
+
+  transform: translateY(-1px);
+}
+
+/* ====================== */
+/* DASHBOARD */
+/* ====================== */
+
+.dashboard-area {
+
+  margin-bottom: 30px;
+}
+
+/* ====================== */
+/* LAYOUT */
+/* ====================== */
+
+.admin-layout {
 
   display: grid;
 
   grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(
-        220px,
-        1fr
-      )
-    );
+    300px
+    1fr
+    380px;
 
-  gap: 20px;
+  gap: 24px;
 
-  margin-top: 30px;
+  align-items: start;
 }
 
-.card {
+/* ====================== */
+/* COLUNAS */
+/* ====================== */
 
-  background: white;
-
-  border-radius: 12px;
-
-  padding: 20px;
-
-  box-shadow:
-    0 2px 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.08
-    );
-}
-
-.card h3 {
-
-  margin-bottom: 15px;
-
-  font-size: 16px;
-}
-
-.card span {
-
-  font-size: 32px;
-
-  font-weight: bold;
-}
-
-.admin-layout {
+.backup-column {
 
   display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
 }
 
-.admin-content {
+.usuarios-column {
 
-  flex: 1;
+  display: flex;
 
-  padding: 30px;
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.logs-column {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+/* ====================== */
+/* RESPONSIVO */
+/* ====================== */
+
+@media (max-width: 1400px) {
+
+  .admin-layout {
+
+    grid-template-columns:
+      280px
+      1fr;
+  }
+
+  .logs-column {
+
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 1000px) {
+
+  .admin-layout {
+
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .admin-header {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .admin-actions {
+
+    width: 100%;
+  }
+
+  .admin-btn {
+
+    width: 100%;
+  }
 }

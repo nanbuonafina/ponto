@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import api from '../../../services/api'
+import './DashboardCards.css'
 
 export default function DashboardCards() {
 
@@ -37,14 +38,7 @@ export default function DashboardCards() {
 
   return (
 
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns:
-          'repeat(auto-fit, minmax(220px,1fr))',
-        gap: '20px'
-      }}
-    >
+    <div className="cards-grid">
 
       <div className="card-admin">
         <h3>Usuários</h3>

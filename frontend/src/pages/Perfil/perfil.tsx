@@ -89,7 +89,7 @@ function Perfil() {
         <div className="perfil-header">
 
           <div className="perfil-avatar">
-            👤
+            {usuario.nome?.charAt(0).toUpperCase()}
           </div>
 
           <h1>

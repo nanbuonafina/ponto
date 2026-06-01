@@ -1,10 +1,13 @@
 import './dashboardfuncionario.css'
+import { useNavigate } from 'react-router-dom'
 
 import { useEffect, useState } from 'react'
 
 import api from '../../services/api'
 
 function DashboardFuncionario() {
+
+  const navigate = useNavigate()
 
   const [historico, setHistorico] =
     useState<any[]>([])
@@ -262,6 +265,13 @@ function DashboardFuncionario() {
             onClick={exportarExcel}
           >
             Exportar Excel
+          </button>
+
+          <button
+            className="perfil-btn"
+            onClick={() => navigate('/perfil')}
+          >
+            Meu Perfil
           </button>
 
           <button

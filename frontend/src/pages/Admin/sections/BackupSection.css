@@ -1,41 +1,106 @@
-.backup-container {
+.backup-section {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  border: 1px solid #D7DDD8;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.04);
+
+  height: fit-content;
+}
+
+.backup-section h2 {
+
+  color: #0B1F14;
+
+  font-size: 22px;
+
+  margin-bottom: 20px;
+}
+
+.backup-list {
 
   display: flex;
 
   flex-direction: column;
 
-  gap: 20px;
+  gap: 10px;
+
+  margin: 20px 0;
 }
 
-.backup-actions {
+.backup-item {
+
+  background: #F8F8F4;
+
+  border: 1px solid #E5E7EB;
+
+  border-radius: 14px;
+
+  padding: 14px;
+
+  color: #374151;
+
+  font-size: 14px;
+}
+
+.backup-buttons {
 
   display: flex;
 
+  flex-direction: column;
+
   gap: 12px;
-
-  flex-wrap: wrap;
 }
 
-.backup-select {
+.backup-buttons select {
 
-  max-width: 450px;
+  height: 48px;
 
-  padding: 12px;
+  border-radius: 14px;
 
-  border-radius: 10px;
+  border: 1px solid #D7DDD8;
 
-  border: 1px solid var(--border-light);
+  padding: 0 14px;
+
+  outline: none;
 }
 
-.warning-box {
+.backup-buttons select:focus {
 
-  background: #FEF3C7;
+  border-color: #007A4D;
 
-  border: 1px solid #FCD34D;
+  box-shadow:
+    0 0 0 4px rgba(0,122,77,0.08);
+}
 
-  color: #92400E;
+.backup-buttons button {
 
-  padding: 16px;
+  height: 48px;
 
-  border-radius: 10px;
+  border: none;
+
+  border-radius: 14px;
+
+  background: #005F3B;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.backup-buttons button:hover {
+
+  background: #007A4D;
+
+  transform: translateY(-1px);
 }

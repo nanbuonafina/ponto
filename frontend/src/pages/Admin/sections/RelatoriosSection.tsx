@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
+import './RelatoriosSection.css'
 
 export default function RelatoriosSection() {
 
@@ -30,57 +31,67 @@ export default function RelatoriosSection() {
 
   return (
 
-    <div className="section-container">
+    <div className="relatorios-section">
 
-      <h2 className="section-title">
-        Relatório Geral de Pontos
-      </h2>
+      <div className="relatorios-header">
 
-      <table className="admin-table">
+        <h2>
+          Relatório Geral de Pontos
+        </h2>
 
-        <thead>
+        <span className="relatorios-count">
+          {pontos.length} registros
+        </span>
 
-          <tr>
+      </div>
 
-            <th>Usuário</th>
+      <div className="table-wrapper">
 
-            <th>Tipo</th>
+        <table className="admin-table">
 
-            <th>Data</th>
+          <thead>
 
-          </tr>
+            <tr>
 
-        </thead>
+              <th>Usuário</th>
 
-        <tbody>
+              <th>Tipo</th>
 
-          {pontos.map((ponto) => (
-
-            <tr key={ponto.id}>
-
-              <td>
-                {ponto.usuario.nome}
-              </td>
-
-              <td>
-                {ponto.tipo}
-              </td>
-
-              <td>
-
-                {new Date(
-                  ponto.dataHora
-                ).toLocaleString()}
-
-              </td>
+              <th>Data</th>
 
             </tr>
 
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {pontos.map((ponto) => (
+
+              <tr key={ponto.id}>
+
+                <td>
+                  {ponto.usuario.nome}
+                </td>
+
+                <td>
+                  {ponto.tipo}
+                </td>
+
+                <td>
+                  {new Date(
+                    ponto.dataHora
+                  ).toLocaleString()}
+                </td>
+
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   )

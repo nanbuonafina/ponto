@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
+import './BackupSection.css'
 
 export default function BackupSection() {
 
@@ -59,50 +60,72 @@ export default function BackupSection() {
   }, [])
 
   return (
+    <div className="backup-section">
 
-    <div className="section-container">
+      <h2>
+        Backups
+      </h2>
 
-      <h2 className="section-title">Backups</h2>
+      <div className="backup-buttons">
 
-      <button className="btn-primary"
-        onClick={gerarBackup}
-      >
-        Gerar Backup
-      </button>
+        <button
+          onClick={gerarBackup}
+        >
+          Gerar Backup
+        </button>
 
-      <hr />
+      </div>
 
-      <select
-        value={arquivo}
-        onChange={(e) =>
-          setArquivo(
-            e.target.value
-          )
-        }
-      >
-
-        <option value="">
-          Selecione
-        </option>
+      <div className="backup-list">
 
         {backups.map((backup) => (
 
-          <option
+          <div
             key={backup}
-            value={backup}
+            className="backup-item"
           >
             {backup}
-          </option>
+          </div>
 
         ))}
 
-      </select>
+      </div>
 
-      <button className="btn-danger"
-        onClick={restaurar}
-      >
-        Restaurar
-      </button>
+      <div className="backup-buttons">
+
+        <select
+          value={arquivo}
+          onChange={(e) =>
+            setArquivo(
+              e.target.value
+            )
+          }
+        >
+
+          <option value="">
+            Selecione um backup
+          </option>
+
+          {backups.map((backup) => (
+
+            <option
+              key={backup}
+              value={backup}
+            >
+              {backup}
+            </option>
+
+          ))}
+
+        </select>
+
+        <button
+          onClick={restaurar}
+        >
+          Restaurar Backup
+        </button>
+
+      </div>
 
     </div>
   )

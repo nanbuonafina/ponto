@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
+import './LogsSection.css'
 
 export default function LogsSection() {
 
@@ -44,12 +45,13 @@ export default function LogsSection() {
   }, [])
 
   return (
+    <div className="logs-section">
 
-    <div className="section-container">
+      <h2>
+        Logs
+      </h2>
 
-      <h2 className="section-title">Logs</h2>
-
-      <div className="filtros">
+      <div className="logs-filtros">
 
         <input
           placeholder="Usuário"
@@ -94,7 +96,7 @@ export default function LogsSection() {
 
         </select>
 
-        <button className="btn-primary"
+        <button
           onClick={carregarLogs}
         >
           Filtrar
@@ -106,16 +108,20 @@ export default function LogsSection() {
 
         <div
           key={log.id}
-          className="card-log"
+          className="log-item"
         >
 
           <strong>
             {log.tipo}
           </strong>
 
-          <p>{log.usuario}</p>
+          <p>
+            {log.usuario}
+          </p>
 
-          <p>{log.descricao}</p>
+          <p>
+            {log.descricao}
+          </p>
 
           <small>
             {new Date(

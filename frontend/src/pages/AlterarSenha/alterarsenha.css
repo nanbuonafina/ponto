@@ -1,77 +1,112 @@
 .senha-container {
-
   min-height: 100vh;
+  background: #f5f5ef;
 
   display: flex;
-
   justify-content: center;
-
   align-items: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      #0f172a,
-      #1e293b
-    );
+  padding: 40px;
 }
 
 .senha-card {
-
-  width: 400px;
+  width: 100%;
+  max-width: 500px;
 
   background: white;
 
   padding: 40px;
 
-  border-radius: 20px;
+  border-radius: 24px;
 
   display: flex;
-
   flex-direction: column;
+  gap: 18px;
 
-  gap: 15px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.05);
 }
 
 .senha-card h1 {
-
   text-align: center;
+  color: #014421;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
 
+.senha-card p {
+  text-align: center;
+  color: #666;
   margin-bottom: 10px;
 }
 
 .senha-card input {
-
   padding: 14px;
 
-  border-radius: 10px;
+  border-radius: 12px;
 
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d7ddd8;
+
+  font-size: 15px;
+
+  transition: 0.2s;
+}
+
+.senha-card input:focus {
+  outline: none;
+
+  border-color: #014421;
+
+  box-shadow:
+    0 0 0 3px rgba(1,68,33,0.12);
 }
 
 .senha-card button {
-
   padding: 14px;
 
   border: none;
 
-  border-radius: 10px;
-
-  background: #2563eb;
-
-  color: white;
+  border-radius: 12px;
 
   cursor: pointer;
+
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.senha-card button:hover {
+  transform: translateY(-1px);
+}
+
+.salvar-btn {
+  background: #014421;
+  color: white;
+}
+
+.salvar-btn:hover {
+  background: #026636;
 }
 
 .voltar {
+  background: #e5e7eb !important;
+  color: #111827;
+}
 
-  background: #64748b !important;
+.voltar:hover {
+  background: #d1d5db !important;
 }
 
 .mensagem {
-
   text-align: center;
 
   font-weight: bold;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #f0fdf4;
+
+  color: #014421;
 }

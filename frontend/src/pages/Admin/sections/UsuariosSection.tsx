@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '../../../services/api'
+import './UsuariosSection.css'
 
 export default function UsuariosSection() {
 
@@ -127,9 +128,9 @@ export default function UsuariosSection() {
 
   return (
 
-    <div className="section-container">
+    <div className="usuarios-section">
 
-      <h2 className="section-title">Usuários</h2>
+      <h2>Usuários</h2>
 
       <div className="filtros">
 
@@ -176,67 +177,68 @@ export default function UsuariosSection() {
         </button>
 
       </div>
+      
+      <div className="table-wrapper">
+          <table className="admin-table">
+            <thead>
 
-      <table className="admin-table">
+              <tr>
 
-        <thead>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Ações</th>
 
-          <tr>
+              </tr>
 
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Ações</th>
+            </thead>
 
-          </tr>
+            <tbody>
 
-        </thead>
+              {usuarios.map((usuario) => (
 
-        <tbody>
+                <tr key={usuario.id}>
 
-          {usuarios.map((usuario) => (
+                  <td>{usuario.id}</td>
 
-            <tr key={usuario.id}>
+                  <td>{usuario.nome}</td>
 
-              <td>{usuario.id}</td>
+                  <td>{usuario.email}</td>
 
-              <td>{usuario.nome}</td>
+                  <td>{usuario.role}</td>
 
-              <td>{usuario.email}</td>
+                  <td>
 
-              <td>{usuario.role}</td>
+                    <button
+                      className="btn-edit"
+                      onClick={() =>
+                        abrirModal(usuario)
+                      }
+                    >
+                      Editar
+                    </button>
 
-              <td>
+                    <button className="btn-delete"
+                      onClick={() =>
+                        excluirUsuario(
+                          usuario.id
+                        )
+                      }
+                    >
+                      Excluir
+                    </button>
 
-                <button
-                  className="btn-edit"
-                  onClick={() =>
-                    abrirModal(usuario)
-                  }
-                >
-                  Editar
-                </button>
+                  </td>
 
-                <button className="btn-danger"
-                  onClick={() =>
-                    excluirUsuario(
-                      usuario.id
-                    )
-                  }
-                >
-                  Excluir
-                </button>
+                </tr>
 
-              </td>
+              ))}
 
-            </tr>
-
-          ))}
-
-        </tbody>
-
-      </table>
+            </tbody>
+          </table>
+      </div>
+      
 
       {mostrarModal && (
         <div className="modal-overlay">
