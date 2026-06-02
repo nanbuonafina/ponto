@@ -1,70 +1,115 @@
-# ⏱️ PontoCorp — Sistema Inteligente de Controle de Ponto
+# ⏰ Sistema de Controle de Ponto
 
-Sistema web completo para controle de ponto eletrônico com autenticação JWT, controle de acesso por níveis (ADMIN/FUNCIONÁRIO), exportação de relatórios Excel, dashboard moderno e arquitetura fullstack.
+Sistema web para gerenciamento de registro de ponto eletrônico, desenvolvido com arquitetura Full Stack utilizando **Spring Boot**, **React + TypeScript** e banco de dados relacional.
 
----
-
-# 📌 Sobre o Projeto
-
-O **PontoCorp** foi desenvolvido com foco em:
-
-- segurança
-- praticidade
-- escalabilidade
-- experiência moderna de usuário
-
-A aplicação permite que funcionários registrem seus pontos eletrônicos e acompanhem seu histórico em tempo real, enquanto administradores possuem acesso a funcionalidades avançadas de gerenciamento.
+O sistema permite que colaboradores realizem registros de entrada e saída, acompanhem seus históricos de ponto, exportem relatórios e que administradores gerenciem usuários, registros e informações gerenciais através de um painel administrativo.
 
 ---
 
-# 🚀 Funcionalidades
-
-## 🔐 Autenticação e Segurança
-
-- Login com JWT
-- Registro de usuários
-- Criptografia de senha com BCrypt
-- Controle de acesso por Roles
-- Rotas protegidas
-- Autenticação Stateless
-- CORS configurado
-- Segurança com Spring Security
-
----
+# 📋 Funcionalidades
 
 ## 👤 Funcionário
 
-- Registrar entrada/saída
-- Visualizar histórico de pontos
-- Exportar relatório Excel
-- Dashboard moderno
-- Logout seguro
+### Registro de Ponto
 
----
+- Registrar entrada
+- Registrar saída
+- Registro automático da data e horário
+- Validação de registros
 
-## 🛠️ Administrador
+### Histórico de Pontos
 
-- Todas as funcionalidades do funcionário
-- Visualizar pontos de todos os usuários
-- Consultar pontos por funcionário
-- Painel administrativo
-- Backup de dados
-- Restore de dados
-- Exportação Excel administrativa
+- Visualizar histórico completo de marcações
+- Consulta de registros anteriores
+- Exibição de:
+  - Data
+  - Horário
+  - Tipo da marcação
+  - Status
 
----
+### Relatórios
 
-# 🧱 Arquitetura
+- Exportação dos registros em:
+  - Excel (.xlsx)
+  - PDF (.pdf)
+- Relatórios individuais do usuário autenticado
+
+### Perfil
+
+- Visualização dos dados do usuário
+- Alteração de senha
+- Política de senha forte
+
+## 👨‍💼 Administrador
+
+### Gestão de Usuários
+
+- Listagem de usuários
+- Cadastro de novos usuários
+- Edição de usuários
+- Exclusão de usuários
+- Definição de perfis:
+  - ADMIN
+  - FUNCIONARIO
+
+### Gestão de Registros de Ponto
+
+- Visualização de todos os registros
+- Consulta de registros por usuário
+- Auditoria de marcações
+
+### Dashboard Administrativo
+
+- Quantidade total de usuários
+- Quantidade de administradores
+- Quantidade de funcionários
+- Informações consolidadas do sistema
+
+### Relatórios Gerenciais
+
+- Exportação de relatórios administrativos
+- Relatórios em Excel
+- Relatórios em PDF
+
+# 🔒 Segurança
+
+## Autenticação
+
+- Login via JWT (JSON Web Token)
+- Sessões stateless
+- Proteção de rotas
+
+## Controle de Acesso
+
+- Controle baseado em papéis (RBAC)
+- Perfis:
+  - ADMIN
+  - FUNCIONARIO
+
+## Política de Senhas
+
+A senha deve conter:
+
+- Mínimo de 8 caracteres
+- Pelo menos 1 letra maiúscula
+- Pelo menos 1 letra minúscula
+- Pelo menos 1 número
+- Pelo menos 1 caractere especial
+
+Exemplo válido:
+
+Senha@123
+
+# 🏗️ Arquitetura
 
 ## Backend
 
-- Java 25
+- Java
 - Spring Boot
 - Spring Security
+- Spring Data JPA
 - JWT
-- JPA / Hibernate
-- PostgreSQL
-- Apache POI
+- Maven
 
 ## Frontend
 
@@ -73,39 +118,71 @@ A aplicação permite que funcionários registrem seus pontos eletrônicos e aco
 - Vite
 - Axios
 - React Router DOM
-- CSS puro
+- CSS
 
----
+## Banco de Dados
+
+Banco relacional utilizado para armazenar usuários, perfis, registros de ponto e informações de auditoria.
 
 # 📂 Estrutura do Projeto
 
-Saída de código
-File README.md created successfully.
+```text
+├── backend/
+├── frontend/
+└── README.md
+```
+
+# 🚀 Como Executar o Projeto
+
+## Backend
 
 ```bash
-ponto/
-│
-├── backend/
-│
-│   ├── config/
-│   ├── controller/
-│   ├── dto/
-│   ├── model/
-│   ├── repository/
-│   ├── security/
-│   ├── service/
-│   └── BackendApplication.java
-│
-├── frontend/
-│
-│   ├── src/
-│   │
-│   ├── components/
-│   ├── context/
-│   ├── dashboard/
-│   ├── pages/
-│   ├── routes/
-│   ├── services/
-│   └── styles/
-│
-└── README.md
+cd backend
+mvn spring-boot:run
+```
+
+## Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+# 🔌 Principais Endpoints
+
+## Autenticação
+
+```http
+POST /auth/login
+```
+
+## Usuários
+
+```http
+GET    /usuarios
+POST   /usuarios
+PUT    /usuarios/{id}
+DELETE /usuarios/{id}
+```
+
+## Pontos
+
+```http
+POST /pontos/registrar
+GET  /pontos/meus-registros
+GET  /pontos
+```
+
+## Relatórios
+
+```http
+GET /relatorios/meus-pontos/pdf
+GET /relatorios/meus-pontos/excel
+GET /relatorios/geral/pdf
+GET /relatorios/geral/excel
+```
+
+# 📄 Licença
+
+Projeto destinado a fins acadêmicos e educacionais.
