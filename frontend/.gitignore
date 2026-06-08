@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# configuracao da aplicacao
+.resources/*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
