@@ -1,6 +1,6 @@
 # ⏰ Sistema de Controle de Ponto
 
-Sistema web para gerenciamento de registro de ponto eletrônico, desenvolvido com arquitetura Full Stack utilizando **Spring Boot**, **React + TypeScript** e banco de dados relacional.
+Sistema web para gerenciamento de registro de ponto eletrônico, desenvolvido com arquitetura Full Stack utilizando **Spring Boot**, **React + TypeScript** e banco de dados PostgreSQL.
 
 O sistema permite que colaboradores realizem registros de entrada e saída, acompanhem seus históricos de ponto, exportem relatórios e que administradores gerenciem usuários, registros e informações gerenciais através de um painel administrativo.
 
